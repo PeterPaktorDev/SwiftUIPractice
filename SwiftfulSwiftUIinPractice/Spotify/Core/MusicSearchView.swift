@@ -10,10 +10,7 @@ import SwiftUI
 import SwiftData
 
 struct MusicSearchView: View {
-    @State private var searchTerm: String = ""
-    @State private var mediaItems: [MediaItem] = []
-    @State private var selectedMedia: MediaItem? = nil
-    @State private var showOptionsMenu: Bool = false
+    @StateObject private var viewModel = MusicSearchViewModel()
     @Environment(\.modelContext) private var modelContext
     @ObservedObject var playerManager = MusicPlayerManager.shared
     
@@ -22,7 +19,7 @@ struct MusicSearchView: View {
             Color.spotifyBlack.ignoresSafeArea()
             
             VStack {
-                if mediaItems.isEmpty {
+                if viewModel.mediaItems.isEmpty {
                     Text("No songs found")
                         .font(.headline)
                         .foregroundColor(.gray)
@@ -30,7 +27,7 @@ struct MusicSearchView: View {
                 } else {
                     ScrollView {
                         LazyVStack(spacing: 12) {
-                            ForEach(mediaItems, id: \.id) { media in
+                            ForEach(viewModel.mediaItems, id: \.id) { media in
                                 SongRowCell(
                                     media: media,
                                     imageSize: 50,
@@ -41,8 +38,7 @@ struct MusicSearchView: View {
                                         playerManager.playTrack(media)
                                     },
                                     onEllipsisPressed: {
-                                        selectedMedia = media.deepCopy()
-                                        showOptionsMenu = true
+                                        viewModel.selectMedia(media)
                                     }
                                 )
                             }
@@ -52,10 +48,10 @@ struct MusicSearchView: View {
                 }
             }
             
-            if let media = selectedMedia, showOptionsMenu {
+            if let media = viewModel.selectedMedia, viewModel.showOptionsMenu {
                 Color.black.opacity(0.5).ignoresSafeArea()
                     .onTapGesture {
-                        showOptionsMenu = false
+                        viewModel.dismissOptionsMenu()
                     }
                 
                 OptionsMenuView(
@@ -66,34 +62,34 @@ struct MusicSearchView: View {
                         } else {
                             FavoritesManager.shared.addToFavorites(media, context: modelContext)
                         }
-                        showOptionsMenu = false
+                        viewModel.dismissOptionsMenu()
                     },
                     onAddToPlaylist: {
                         // Add to playlist action
-                        showOptionsMenu = false
+                        viewModel.dismissOptionsMenu()
                     },
                     onHideSong: {
                         // Hide song action
-                        showOptionsMenu = false
+                        viewModel.dismissOptionsMenu()
                     },
                     onAddToQueue: {
                         // Add to queue action
-                        showOptionsMenu = false
+                        viewModel.dismissOptionsMenu()
                     },
                     onShare: {
                         // Share action
-                        showOptionsMenu = false
+                        viewModel.dismissOptionsMenu()
                     },
                     onStartJam: {
                         // Start a jam action
-                        showOptionsMenu = false
+                        viewModel.dismissOptionsMenu()
                     },
                     onGoToRadio: {
                         // Go to radio action
-                        showOptionsMenu = false
+                        viewModel.dismissOptionsMenu()
                     },
                     onDismiss: {
-                        showOptionsMenu = false
+                        viewModel.dismissOptionsMenu()
                     }
                 )
                 .environment(\.modelContext, modelContext)
@@ -102,31 +98,16 @@ struct MusicSearchView: View {
                 .cornerRadius(10)
             }
         }
-        .searchable(text: $searchTerm, prompt: "Search for music")
-        .onChange(of: searchTerm) {
+        .searchable(text: $viewModel.searchTerm, prompt: "Search for music")
+        .onChange(of: viewModel.searchTerm) {
             Task {
-                await performSearch(term: searchTerm)
+                await viewModel.performSearch()
             }
         }
-        .onChange(of: showOptionsMenu) {
-            if showOptionsMenu {
+        .onChange(of: viewModel.showOptionsMenu) {
+            if viewModel.showOptionsMenu {
                 hideKeyboard()
             }
-        }
-    }
-    
-    private func performSearch(term: String) async {
-        guard !term.isEmpty else {
-            mediaItems = []
-            return
-        }
-        
-        do {
-            let helper = DatabaseHelper()
-            mediaItems = try await helper.getMusic(term: term, limit: 50)
-        } catch {
-            print("Error: \(error.localizedDescription)")
-            mediaItems = []
         }
     }
     
