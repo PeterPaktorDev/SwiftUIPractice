@@ -42,23 +42,22 @@ class MusicPlayerManager: ObservableObject {
             return
         }
 
-        print("Playing track with URL: \(url)")
-        
-        resetPlayer()
-
-        currentTrack = track
-        playerItem = AVPlayerItem(url: url)
-        player = AVPlayer(playerItem: playerItem)
-
-        // 添加时间观察者以更新播放进度
-        addPeriodicTimeObserver()
-
-        player?.play()
-        isPlaying = true
-        hasBeenPlayed = true
-
-        // 监听播放结束
-        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
+        Task {
+            let playerItem = AVPlayerItem(url: url)
+            let player = AVPlayer(playerItem: playerItem)
+            
+            await MainActor.run {
+                self.resetPlayer()
+                self.currentTrack = track
+                self.playerItem = playerItem
+                self.player = player
+                self.addPeriodicTimeObserver()
+                self.player?.play()
+                self.isPlaying = true
+                self.hasBeenPlayed = true
+                NotificationCenter.default.addObserver(self, selector: #selector(self.playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: self.playerItem)
+            }
+        }
     }
     
     func pauseTrack() {

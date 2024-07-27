@@ -37,6 +37,7 @@
 		D03E3AFD2C4B67BC00810B8D /* OptionsMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03E3AFC2C4B67BC00810B8D /* OptionsMenuView.swift */; };
 		D03E3B012C4EA27800810B8D /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03E3B002C4EA27800810B8D /* FavoritesView.swift */; };
 		D03E3B032C4EAB9F00810B8D /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03E3B022C4EAB9F00810B8D /* SearchView.swift */; };
+		D0ACBC162C55035700D010C3 /* SpotifyHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ACBC152C55035700D010C3 /* SpotifyHomeViewModel.swift */; };
 		D0E60E132C3E5CFD00FEE225 /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E60E122C3E5CFD00FEE225 /* MediaItem.swift */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +71,7 @@
 		D03E3AFC2C4B67BC00810B8D /* OptionsMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsMenuView.swift; sourceTree = "<group>"; };
 		D03E3B002C4EA27800810B8D /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		D03E3B022C4EAB9F00810B8D /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		D0ACBC152C55035700D010C3 /* SpotifyHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyHomeViewModel.swift; sourceTree = "<group>"; };
 		D0E60E122C3E5CFD00FEE225 /* MediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -153,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				02368C9A2B806210006DDC4E /* SpotifyHomeView.swift */,
+				D0ACBC152C55035700D010C3 /* SpotifyHomeViewModel.swift */,
 				028D5D202B807FA400DA61EB /* SpotifyPlaylistView.swift */,
 				D03E3AEF2C49042200810B8D /* MusicPlayerView.swift */,
 				D03E3B002C4EA27800810B8D /* FavoritesView.swift */,
@@ -287,6 +290,7 @@
 				D03E3AF02C49042200810B8D /* MusicPlayerView.swift in Sources */,
 				02368C9B2B806210006DDC4E /* SpotifyHomeView.swift in Sources */,
 				D03E3AF32C490B3700810B8D /* MusicPlayerManager.swift in Sources */,
+				D0ACBC162C55035700D010C3 /* SpotifyHomeViewModel.swift in Sources */,
 				028D5D1F2B80777D00DA61EB /* ImageTitleRowCell.swift in Sources */,
 				028D5D212B807FA400DA61EB /* SpotifyPlaylistView.swift in Sources */,
 				02368C772B8056C8006DDC4E /* ContentView.swift in Sources */,

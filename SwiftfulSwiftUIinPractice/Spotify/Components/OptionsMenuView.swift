@@ -39,7 +39,10 @@ struct OptionsMenuView: View {
             }
             .padding()
             
-            Divider()
+            Rectangle()
+                .fill(Color.white)
+                .frame(height: 2)
+                .padding(.horizontal)
             
             menuButton(
                 title: isFavorite ? "Remove from Liked Songs" : "Add to Liked Songs",
@@ -59,7 +62,7 @@ struct OptionsMenuView: View {
             menuButton(title: "Cancel", systemImage: "xmark", action: onDismiss)
         }
         .padding()
-        .background(Color.black)
+        .background(Color.spotifyGray.opacity(0.95))
         .cornerRadius(10)
         .foregroundColor(.white)
         .onAppear {

@@ -99,7 +99,6 @@ struct MusicSearchView: View {
                 .environment(\.modelContext, modelContext)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(Color.black)
                 .cornerRadius(10)
             }
         }
