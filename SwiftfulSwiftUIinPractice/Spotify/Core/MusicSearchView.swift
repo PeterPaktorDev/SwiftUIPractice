@@ -19,7 +19,15 @@ struct MusicSearchView: View {
             Color.spotifyBlack.ignoresSafeArea()
             
             VStack {
-                if viewModel.mediaItems.isEmpty {
+                if viewModel.isSearching {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                } else if !viewModel.hasSearched {
+                    Text("Search for your favorite songs")
+                        .font(.headline)
+                        .foregroundColor(.gray)
+                        .padding()
+                } else if viewModel.mediaItems.isEmpty {
                     Text("No songs found")
                         .font(.headline)
                         .foregroundColor(.gray)
@@ -99,11 +107,6 @@ struct MusicSearchView: View {
             }
         }
         .searchable(text: $viewModel.searchTerm, prompt: "Search for music")
-        .onChange(of: viewModel.searchTerm) {
-            Task {
-                await viewModel.performSearch()
-            }
-        }
         .onChange(of: viewModel.showOptionsMenu) {
             if viewModel.showOptionsMenu {
                 hideKeyboard()
