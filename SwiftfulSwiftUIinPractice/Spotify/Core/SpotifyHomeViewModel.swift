@@ -32,10 +32,6 @@ class SpotifyHomeViewModel: ObservableObject {
             
             let (user, allMedias) = await (try userFetch, try allMediaFetch)
             
-            currentUser = user
-            newRelease = allMedias.randomElement()
-            medias = Array(allMedias.prefix(8))
-            
             var mediaDictionary: [String: [MediaItem]] = [:]
             
             for media in allMedias {
@@ -44,8 +40,15 @@ class SpotifyHomeViewModel: ObservableObject {
                 }
             }
             
-            collectionRows = mediaDictionary.map { (collectionName, medias) in
+            let newCollectionRows = mediaDictionary.map { (collectionName, medias) in
                 CollectionRow(title: collectionName.capitalized, medias: medias)
+            }
+
+            await MainActor.run {
+                self.currentUser = user
+                self.newRelease = allMedias.randomElement()
+                self.medias = Array(allMedias.prefix(8))
+                self.collectionRows = newCollectionRows
             }
         } catch {
             print("Error: \(error.localizedDescription)")
