@@ -27,7 +27,6 @@ struct ContentView: View {
                 TabView {
                     RouterView { _ in
                         SpotifyHomeView()
-                            .environment(\.modelContext, modelContainer.mainContext)
                     }
                     .tabItem {
                         Label("Home", systemImage: "house")
@@ -35,7 +34,6 @@ struct ContentView: View {
 
                     RouterView { _ in
                         MusicSearchView()
-                            .environment(\.modelContext, modelContainer.mainContext)
                     }
                     .tabItem {
                         Label("Search", systemImage: "magnifyingglass")
@@ -43,7 +41,6 @@ struct ContentView: View {
 
                     RouterView { _ in
                         FavoritesView()
-                            .environment(\.modelContext, modelContainer.mainContext)
                     }
                     .tabItem {
                         Label("Library", systemImage: "rectangle.stack")
@@ -61,18 +58,6 @@ struct ContentView: View {
                 }
             }
             .edgesIgnoringSafeArea(.bottom)
-        }
-    }
-    
-    var modelContainer: ModelContainer {
-        do {
-            let schema = Schema([
-                FavoriteMedia.self,
-                MediaItem.self
-            ])
-            return try ModelContainer(for: schema)
-        } catch {
-            fatalError("Failed to create ModelContainer: \(error)")
         }
     }
 }
