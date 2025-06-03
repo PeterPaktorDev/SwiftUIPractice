@@ -1,1 +1,2 @@
-![Demo 動畫](demo.gif)
+Hey there! 👋 This is a cool iOS app I built using SwiftUI and SwiftData. It's like a mini Spotify clone that shows off how to build modern iOS apps the right way. I used MVVM (Model-View-ViewModel) to keep the code clean and organized, and added some sweet animations to make it look and feel awesome. The app uses SwiftUI's modern way of building interfaces and SwiftData to handle all the data stuff, making everything work smoothly together.
+![Demo](demo.gif)
